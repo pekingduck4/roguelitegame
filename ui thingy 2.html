@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombie Shooter - Classic Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --menu-width: 450px;
+            --accent-color: #f2f2f2;
+            --hover-bg: rgba(255, 255, 255, 0.15);
+            --bar-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: none;/*background-color: #050505;*/
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        /* Gritty Background Visuals */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Replace with a dark urban/zombie image */
+			 background: linear-gradient(to right, rgba(0,0,0,0.8) 20%, transparent 80%), url('https://pekingduck4.github.io/3dnArt/Gemini_Generated_Image_6cemp76cemp76cem.png?auto=format&fit=crop&q=80&w=2070'); 
+            /*background: linear-gradient(to right, rgba(0,0,0,0.8) 20%, transparent 80%),
+                        url('https://pekingduck4.github.io/3dnArt/Gemini_Generated_Image_6cemp76cemp76cem.png?auto=format&fit=crop&q=80&w=2070'); */
+            background-size: cover;
+            background-position: center;
+            filter:  contrast(120%) brightness(90%);
+            z-index: -2;
+        }
+
+        /* CRT/Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Menu Container */
+        .menu-container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 80px;
+            z-index: 5;
+        }
+
+        /* Game Title/Logo Area */
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .header span {
+            color: #777;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Menu List */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            position: relative;
+            width: var(--menu-width);
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bar-bg);
+            border-left: 0px solid white;
+        }
+
+        /* The bar that highlights the selection */
+        li::before {
+            content: '';
+            position: absolute;
+            left: -80px;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: white;
+            transition: width 0.15s ease-out;
+            z-index: -1;
+        }
+
+        li:hover::before {
+            width: calc(var(--menu-width) + 80px);
+        }
+
+        /* Menu Text */
+        li a {
+            display: block;
+            padding: 12px 25px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.15s ease;
+        }
+
+        li:hover a {
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* Sub-info / Footer */
+        .footer-info {
+            position: absolute;
+            bottom: 50px;
+            left: 80px;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .online-status {
+            color: #4caf50; /* Tactical Green */
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+    <div class="scanlines"></div>
+
+    <div class="menu-container">
+        <div class="header">
+            <h1>ZOMBIES</h1>
+            <span>Project: Toasterino</span>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#">Campaign</a></li>
+                <li><a href="#">Survival Mode</a></li>
+                <li><a href="#">Special Ops</a></li>
+                <li><a href="#">Weapon Loadouts</a></li>
+                <li><a href="#">Barracks</a></li>
+                <li><a href="#">Options</a></li>
+                <li><a href="#">Quit to Desktop</a></li>
+            </ul>
+        </nav>
+
+        <div class="footer-info">
+            Server Status: <span class="online-status">Connected</span> | v1.0.2009
+        </div>
+    </div>
+
+    <script>
+        // Simple sound effect simulation on hover
+        const menuItems = document.querySelectorAll('li');
+        const hoverSound = new Audio('https://www.soundjay.com/buttons/sounds/button-27.mp3'); 
+        // Note: Real games use specific .wav files. This is a placeholder.
+
+        menuItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                hoverSound.currentTime = 0;
+                hoverSound.volume = 0.2;
+                hoverSound.play();
+            });
+        });
+    </script>
+</body>
+</html>
